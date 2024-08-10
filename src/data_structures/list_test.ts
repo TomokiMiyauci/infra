@@ -250,6 +250,29 @@ describe("List", () => {
       expect([...this.list]).toEqual([0, 1, 3]);
     });
   });
+
+  describe("indices", () => {
+    it<Context>(
+      "should return empty ordered set if list is empty",
+      function () {
+        const indices = this.list.indices();
+
+        expect([...indices]).toEqual([]);
+        expect(indices.size).toBe(0);
+      },
+    );
+
+    it<Context>(
+      "should return ordered set",
+      function () {
+        this.list.append("a"), this.list.append("b"), this.list.append("c");
+
+        const indices = this.list.indices();
+
+        expect([...indices]).toEqual([0, 1, 2]);
+      },
+    );
+  });
 });
 
 describe("OrderedSet", () => {

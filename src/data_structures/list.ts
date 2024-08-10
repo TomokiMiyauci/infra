@@ -136,6 +136,14 @@ export class List<T> {
     }
   }
 
+  /** Return the range from 0 to this {@link size}, exclusive.
+   *
+   * [Infra Standard](https://infra.spec.whatwg.org/#list-get-the-indices)
+   */
+  indices(): OrderedSet<number> {
+    return range(0, this.size, "exclusive");
+  }
+
   private length = length;
 }
 
