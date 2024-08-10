@@ -1,0 +1,21 @@
+{
+  "name": "@miyauci/infra",
+  "tasks": {
+    "test": "deno test --doc"
+  },
+  "exclude": ["CHANGELOG.md"],
+  "compilerOptions": {
+    "noImplicitOverride": true,
+    "noUncheckedIndexedAccess": true
+  },
+  "imports": {
+    "@std/expect": "jsr:@std/expect@^1.0.0",
+    "@std/testing": "jsr:@std/testing@^1.0.0",
+
+    "@miyauci/infra": "./src/mod.ts"
+  },
+  "exports": {
+    ".": "./src/mod.ts"
+  },
+  "version": "0.1.0-placeholder"
+}
