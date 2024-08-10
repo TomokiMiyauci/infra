@@ -12,6 +12,14 @@ describe("List", () => {
     this.list = new List();
   });
 
+  describe("construct", () => {
+    it("should define initial value", () => {
+      const list = new List([1, 2, 3]);
+
+      expect([...list]).toEqual([1, 2, 3]);
+    });
+  });
+
   describe("append", () => {
     it<Context>("should add 1 item", function () {
       this.list.append("a");

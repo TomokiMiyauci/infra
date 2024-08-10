@@ -16,6 +16,10 @@ export class List<T> {
   #splice = splice;
   #entries = entries as () => IterableIterator<[number, T]>;
 
+  constructor(iterable?: Iterable<T> | null) {
+    if (iterable) { for (const item of iterable) this.#push(item); }
+  }
+
   /**
    * [Infra Standard](https://infra.spec.whatwg.org/#list-iterate)
    */
