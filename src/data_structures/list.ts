@@ -94,7 +94,9 @@ export class List<T> {
    *
    * [Infra Standard](https://infra.spec.whatwg.org/#list-replace)
    */
-  replace(condition: (item: T) => boolean, newItem: T): void {
+  replace(conditionOrOldItem: ((item: T) => boolean) | T, newItem: T): void {
+    const condition = normalizeCondition(conditionOrOldItem);
+
     for (const [index, item] of this.#entries()) {
       if (condition(item)) this.#splice(index, 1, newItem);
     }
@@ -152,6 +154,8 @@ export class List<T> {
  * [Infra Standard](https://infra.spec.whatwg.org/#sets)
  */
 export class OrderedSet<T> extends List<T> {
+  #splice = splice;
+
   /** Append {@link item} if this does not {@link contains} the given {@link item}.
    *
    * `O(n)`
@@ -170,6 +174,30 @@ export class OrderedSet<T> extends List<T> {
    */
   override prepend(item: T): void {
     if (!this.contains(item)) super.prepend(item);
+  }
+
+  /** If set {@link contains} {@link oldItem} or {@link newItem}, then replace the first instance of either with {@link newItem} and {@link remove} all other instances.
+   *
+   * `O(n)`
+   *
+   * Infra Standard](https://infra.spec.whatwg.org/#set-replace)
+   */
+  override replace(oldItem: T, newItem: T): void {
+    let replaced = false;
+
+    for (let index = 0; index < this.size; index++) {
+      const item = this[index]!;
+
+      if (oldItem === item || item === newItem) {
+        if (replaced) {
+          this.#splice(index, 1);
+          index--;
+        } else {
+          replaced = true;
+          this.#splice(index, 1, newItem);
+        }
+      }
+    }
   }
 
   override clone(): OrderedSet<T> {
@@ -219,6 +247,16 @@ export class OrderedSet<T> extends List<T> {
 
     return set;
   }
+}
+
+function normalizeCondition<T>(
+  itemOrCondition: T | ((item: T) => boolean),
+): (item: T) => boolean {
+  if (typeof itemOrCondition === "function") {
+    return itemOrCondition as (item: T) => boolean;
+  }
+
+  return (item) => itemOrCondition === item;
 }
 
 export type RangeType = "exclusive" | "inclusive";

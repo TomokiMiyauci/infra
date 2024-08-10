@@ -377,6 +377,99 @@ describe("OrderedSet", () => {
     });
   });
 
+  describe("replace", () => {
+    it<Context>("should replace first item", function () {
+      this.set.append("a"), this.set.append("b"), this.set.append("c");
+      this.set.replace("a", "c");
+
+      expect([...this.set]).toEqual(["c", "b"]);
+    });
+
+    it<Context>("should remove matched item", function () {
+      this.set.append("c"), this.set.append("b"), this.set.append("a");
+      this.set.replace("a", "c");
+
+      expect([...this.set]).toEqual(["c", "b"]);
+    });
+
+    it<Context>(
+      "should replace the first element and delete all the rest if condition is true",
+      function () {
+        this.set.append("a"), this.set.append("b"), this.set.append("c");
+
+        this.set.replace("b", "d");
+
+        expect([...this.set]).toEqual(["a", "d", "c"]);
+      },
+    );
+
+    it<Context>(
+      "should replace the first element and delete all the rest if condition is true",
+      function () {
+        this.set.append("b"), this.set.append("c"), this.set.append("d");
+
+        this.set.replace("b", "c");
+
+        expect([...this.set]).toEqual(["c", "d"]);
+      },
+    );
+
+    it<Context>("should pass all matrix", function () {
+      // init [1, 2, 3]
+      const table: [from: number, to: number, result: number[]][] = [
+        [0, 1, [1, 2, 3]],
+        [0, 2, [1, 2, 3]],
+        [0, 3, [1, 2, 3]],
+        [0, 4, [1, 2, 3]],
+        [1, 1, [1, 2, 3]],
+        [1, 2, [2, 3]],
+        [1, 3, [3, 2]],
+        [1, 4, [4, 2, 3]],
+        [2, 1, [1, 3]],
+        [2, 2, [1, 2, 3]],
+        [2, 3, [1, 3]],
+        [2, 4, [1, 4, 3]],
+        [3, 1, [1, 2]],
+        [3, 2, [1, 2]],
+        [3, 3, [1, 2, 3]],
+        [3, 4, [1, 2, 4]],
+      ];
+
+      for (const [from, to, result] of table) {
+        this.set.append(1);
+        this.set.append(2);
+        this.set.append(3);
+        this.set.replace(from, to);
+
+        expect([...this.set]).toEqual(result);
+
+        this.set.empty();
+      }
+    });
+
+    it<Context>(
+      "should do nothing if condition is false",
+      function () {
+        this.set.append("a"), this.set.append("b"), this.set.append("c");
+
+        this.set.replace("e", "d");
+
+        expect([...this.set]).toEqual(["a", "b", "c"]);
+      },
+    );
+
+    it<Context>(
+      "should do nothing if condition is false 2",
+      function () {
+        this.set.append("b"), this.set.append("c"), this.set.append("d");
+
+        this.set.replace("a", "d");
+
+        expect([...this.set]).toEqual(["b", "c", "d"]);
+      },
+    );
+  });
+
   describe("intersection", () => {
     it<Context>("should cloned empty set", function () {
       const cloned = this.set.intersection(new List());
