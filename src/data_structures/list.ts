@@ -136,3 +136,59 @@ export class List<T> {
 
   private length = length;
 }
+
+/** A {@link List list} with the additional semantic that it must not contain the same item twice.
+ *
+ * [Infra Standard](https://infra.spec.whatwg.org/#sets)
+ */
+export class OrderedSet<T> extends List<T> {
+  /** Append {@link item} if this does not {@link contains} the given {@link item}.
+   *
+   * `O(n)`
+   *
+   * [Infra Standard](https://infra.spec.whatwg.org/#set-append)
+   */
+  override append(item: T): void {
+    if (!this.contains(item)) super.append(item);
+  }
+
+  /** Prepend {@link item} if this does not {@link contains} the given {@link item}.
+   *
+   * `O(n)`
+   *
+   * [Infra Standard](https://infra.spec.whatwg.org/#set-prepend)
+   */
+  override prepend(item: T): void {
+    if (!this.contains(item)) super.prepend(item);
+  }
+
+  override clone(): OrderedSet<T> {
+    const set = new OrderedSet<T>();
+
+    for (const item of this) set.append(item);
+
+    return set;
+  }
+
+  /**
+   * [Infra Standard](https://infra.spec.whatwg.org/#set-intersection)
+   */
+  intersection(iter: List<T>): OrderedSet<T> {
+    const set = new OrderedSet<T>();
+
+    for (const item of this) if (iter.contains(item)) set.append(item);
+
+    return set;
+  }
+
+  /**
+   * [Infra Standard](https://infra.spec.whatwg.org/#set-union)
+   */
+  union(iter: Iterable<T>): OrderedSet<T> {
+    const set = this.clone();
+
+    for (const item of iter) set.append(item);
+
+    return set;
+  }
+}
