@@ -149,6 +149,13 @@ export class List<T> {
   private length = length;
 }
 
+export interface ListLike<T> {
+  /** Whether the {@link item} appears in the list-like or not. */
+  contains(item: T): boolean;
+
+  [Symbol.iterator](): IterableIterator<T>;
+}
+
 /** A {@link List list} with the additional semantic that it must not contain the same item twice.
  *
  * [Infra Standard](https://infra.spec.whatwg.org/#sets)
@@ -211,7 +218,7 @@ export class OrderedSet<T> extends List<T> {
   /**
    * [Infra Standard](https://infra.spec.whatwg.org/#set-subset)
    */
-  isSubsetOf(other: OrderedSet<T>): boolean {
+  isSubsetOf(other: ListLike<T>): boolean {
     for (const item of this) if (!other.contains(item)) return false;
 
     return true;
@@ -220,7 +227,7 @@ export class OrderedSet<T> extends List<T> {
   /**
    * [Infra Standard](https://infra.spec.whatwg.org/#set-superset)
    */
-  isSupersetOf(other: OrderedSet<T>): boolean {
+  isSupersetOf(other: ListLike<T>): boolean {
     for (const item of other) if (!this.contains(item)) return false;
 
     return true;
@@ -229,7 +236,7 @@ export class OrderedSet<T> extends List<T> {
   /**
    * [Infra Standard](https://infra.spec.whatwg.org/#set-intersection)
    */
-  intersection(iter: List<T>): OrderedSet<T> {
+  intersection(iter: ListLike<T>): OrderedSet<T> {
     const set = new OrderedSet<T>();
 
     for (const item of this) if (iter.contains(item)) set.append(item);
