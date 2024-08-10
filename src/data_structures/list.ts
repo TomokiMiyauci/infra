@@ -181,6 +181,24 @@ export class OrderedSet<T> extends List<T> {
   }
 
   /**
+   * [Infra Standard](https://infra.spec.whatwg.org/#set-subset)
+   */
+  isSubsetOf(other: OrderedSet<T>): boolean {
+    for (const item of this) if (!other.contains(item)) return false;
+
+    return true;
+  }
+
+  /**
+   * [Infra Standard](https://infra.spec.whatwg.org/#set-superset)
+   */
+  isSupersetOf(other: OrderedSet<T>): boolean {
+    for (const item of other) if (!this.contains(item)) return false;
+
+    return true;
+  }
+
+  /**
    * [Infra Standard](https://infra.spec.whatwg.org/#set-intersection)
    */
   intersection(iter: List<T>): OrderedSet<T> {

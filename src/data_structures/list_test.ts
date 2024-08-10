@@ -464,6 +464,133 @@ describe("OrderedSet", () => {
       expect(set[3]).toBe(3);
     });
   });
+
+  describe("isSubsetOf", () => {
+    it<Context>("should return empty if each set is empty", function () {
+      expect(this.set.isSubsetOf(new OrderedSet())).toBeTruthy();
+    });
+
+    it<Context>(
+      "should return true because the set of multiple 4(< 20) is subset of even numbers",
+      function () {
+        this.set.append(4),
+          this.set.append(8),
+          this.set.append(12),
+          this.set.append(16);
+
+        const other = new OrderedSet();
+
+        other.append(2),
+          other.append(4),
+          other.append(6),
+          other.append(8),
+          other.append(10),
+          other.append(12),
+          other.append(14),
+          other.append(16);
+
+        expect(this.set.isSubsetOf(other)).toBeTruthy();
+      },
+    );
+
+    it<Context>(
+      "should return false because prime numbers (<20) is not a subset of all odd numbers (<20)",
+      function () {
+        this.set.append(2),
+          this.set.append(3),
+          this.set.append(5),
+          this.set.append(7);
+        this.set.append(9);
+        this.set.append(11);
+        this.set.append(13);
+
+        const other = new OrderedSet();
+
+        other.append(3),
+          other.append(5),
+          other.append(7),
+          other.append(9),
+          other.append(11),
+          other.append(13),
+          expect(this.set.isSubsetOf(other)).toBeFalsy();
+      },
+    );
+
+    it<Context>(
+      "should return false because sets are subsets of each other",
+      function () {
+        this.set.append(1), this.set.append(2), this.set.append(3);
+
+        const other = new OrderedSet();
+
+        other.append(1),
+          other.append(2),
+          other.append(3),
+          expect(this.set.isSubsetOf(other)).toBeTruthy();
+      },
+    );
+  });
+
+  describe("isSupersetOf", () => {
+    it<Context>("should return empty if each set is empty", function () {
+      expect(this.set.isSupersetOf(new OrderedSet())).toBeTruthy();
+    });
+
+    it<Context>(
+      "should return true because set of even numbers (<20) is a superset of multiples of 4 (<20)",
+      function () {
+        this.set.append(2),
+          this.set.append(4),
+          this.set.append(6),
+          this.set.append(8),
+          this.set.append(10),
+          this.set.append(12),
+          this.set.append(14),
+          this.set.append(16);
+
+        const other = new OrderedSet();
+
+        other.append(4), other.append(8), other.append(12), other.append(16);
+
+        expect(this.set.isSupersetOf(other)).toBeTruthy();
+      },
+    );
+
+    it<Context>(
+      "should return false because set of all odd numbers (<20) is not a superset of prime numbers (<20)",
+      function () {
+        this.set.append(3),
+          this.set.append(5),
+          this.set.append(7),
+          this.set.append(9),
+          this.set.append(11),
+          this.set.append(13);
+
+        const other = new OrderedSet();
+
+        other.append(2), other.append(3), other.append(5), other.append(7);
+        other.append(9);
+        other.append(11);
+        other.append(13);
+
+        expect(this.set.isSupersetOf(other)).toBeFalsy();
+      },
+    );
+
+    it<Context>(
+      "should return false because sets are supersets of each other",
+      function () {
+        this.set.append(1), this.set.append(2), this.set.append(3);
+
+        const other = new OrderedSet();
+
+        other.append(1),
+          other.append(2),
+          other.append(3),
+          expect(this.set.isSupersetOf(other)).toBeTruthy();
+      },
+    );
+  });
 });
 
 describe("range", () => {
