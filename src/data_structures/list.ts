@@ -167,6 +167,16 @@ export interface ListLike<T> {
 export class OrderedSet<T> extends List<T> {
   #splice = splice;
 
+  constructor(iterable?: Iterable<T> | null) {
+    super();
+
+    if (iterable) {
+      for (const item of iterable) {
+        if (!super.contains(item)) super.append(item);
+      }
+    }
+  }
+
   /** Append {@link item} if this does not {@link contains} the given {@link item}.
    *
    * `O(n)`

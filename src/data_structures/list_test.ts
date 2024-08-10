@@ -288,6 +288,20 @@ describe("OrderedSet", () => {
     this.set = new OrderedSet();
   });
 
+  describe("construct", () => {
+    it("should add initial value", () => {
+      const set = new OrderedSet([1, 2, 3]);
+
+      expect([...set]).toEqual([1, 2, 3]);
+    });
+
+    it("should add initial value except duplication", () => {
+      const set = new OrderedSet([1, 1, 1, 2, 2, 2]);
+
+      expect([...set]).toEqual([1, 2]);
+    });
+  });
+
   describe("append", () => {
     it<Context>("should add 1 item", function () {
       this.set.append("a");
