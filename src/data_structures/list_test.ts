@@ -1,6 +1,6 @@
 import { expect } from "@std/expect";
 import { beforeEach, describe, it } from "@std/testing/bdd";
-import { List, OrderedSet } from "./list.ts";
+import { List, OrderedSet, range } from "./list.ts";
 
 interface Context {
   list: List<unknown>;
@@ -440,5 +440,47 @@ describe("OrderedSet", () => {
       expect(set[2]).toBe(-1);
       expect(set[3]).toBe(3);
     });
+  });
+});
+
+describe("range", () => {
+  it("should be inclusive", () => {
+    const table: [n: number, m: number, number[]][] = [
+      [0, 3, [0, 1, 2, 3]],
+      [0, 0, [0]],
+      [0, -1, []],
+      [1, -1, []],
+      [1, 1, [1]],
+    ];
+
+    for (const [n, m, result] of table) {
+      expect([...range(n, m, "inclusive")]).toEqual(result);
+    }
+  });
+
+  it("should be exclusive", () => {
+    const table: [n: number, m: number, number[]][] = [
+      [0, 3, [0, 1, 2]],
+      [0, 0, []],
+      [0, -1, []],
+      [1, -1, []],
+      [1, 1, []],
+    ];
+
+    for (const [n, m, result] of table) {
+      expect([...range(n, m, "exclusive")]).toEqual(result);
+    }
+  });
+
+  it("should throw error", () => {
+    const table: [n: number, m: number][] = [
+      [0.1, 1],
+      [0, 1.1],
+      [0.1, 1.1],
+    ];
+
+    for (const [n, m] of table) {
+      expect(() => range(n, m, "exclusive")).toThrow(RangeError);
+    }
   });
 });

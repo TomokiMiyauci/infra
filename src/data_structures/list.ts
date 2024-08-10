@@ -1,3 +1,5 @@
+import { assertInteger } from "./util.ts";
+
 const { push, length, unshift, pop, includes, splice, entries } =
   Array.prototype;
 const iterator = Array.prototype[Symbol.iterator];
@@ -191,4 +193,30 @@ export class OrderedSet<T> extends List<T> {
 
     return set;
   }
+}
+
+export type RangeType = "exclusive" | "inclusive";
+
+/** Creates a new ordered set containing all of the integers from {@link n} up to and including {@link m} or {@link m} - 1 in consecutively increasing order.
+ *
+ * [Infra Standard](https://infra.spec.whatwg.org/#the-range)
+ *
+ * @throws {RangeError} If {@link n} or {@link m} is not integer.
+ */
+export function range(
+  n: number,
+  m: number,
+  type: RangeType,
+): OrderedSet<number> {
+  assertInteger(n, RangeError), assertInteger(m, RangeError);
+
+  const set = new OrderedSet<number>();
+
+  if (type === "inclusive") {
+    for (let index = n; index <= m; index++) set.append(index);
+  } else {
+    for (let index = n; index < m; index++) set.append(index);
+  }
+
+  return set;
 }
