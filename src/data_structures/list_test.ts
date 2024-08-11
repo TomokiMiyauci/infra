@@ -517,6 +517,71 @@ describe("OrderedSet", () => {
     );
   });
 
+  describe("replaceIf", () => {
+    it<Context>("should pass all matrix", function () {
+      // init [1, 2, 3]
+      const table: [
+        condition: (item: unknown) => boolean,
+        to: number,
+        result: number[],
+      ][] = [
+        [() => true, 1, [1]],
+        [() => true, 2, [2]],
+        [() => true, 3, [3]],
+        [() => true, 4, [4]],
+        [() => false, 1, [1, 2, 3]],
+        [() => false, 2, [1, 2, 3]],
+        [() => false, 3, [1, 2, 3]],
+        [() => false, 4, [1, 2, 3]],
+        [(item) => item === 1, 1, [1, 2, 3]],
+        [(item) => item === 1, 2, [2, 3]],
+        [(item) => item === 1, 3, [3, 2]],
+        [(item) => item === 1, 4, [4, 2, 3]],
+        [(item) => item === 2, 1, [1, 3]],
+        [(item) => item === 2, 2, [1, 2, 3]],
+        [(item) => item === 2, 3, [1, 3]],
+        [(item) => item === 2, 4, [1, 4, 3]],
+        [(item) => item === 3, 1, [1, 2]],
+        [(item) => item === 3, 2, [1, 2]],
+        [(item) => item === 3, 3, [1, 2, 3]],
+        [(item) => item === 3, 4, [1, 2, 4]],
+      ];
+
+      for (const [from, to, result] of table) {
+        this.set.append(1);
+        this.set.append(2);
+        this.set.append(3);
+        this.set.replaceIf(from, to);
+
+        expect([...this.set]).toEqual(result);
+
+        this.set.empty();
+      }
+    });
+
+    it<Context>(
+      "should do nothing if condition is false",
+      function () {
+        this.set.append("a"), this.set.append("b"), this.set.append("c");
+
+        this.set.replace("e", "d");
+
+        expect([...this.set]).toEqual(["a", "b", "c"]);
+      },
+    );
+
+    it<Context>(
+      "should do nothing if condition is false 2",
+      function () {
+        this.set.append("b"), this.set.append("c"), this.set.append("d");
+
+        this.set.replace("a", "d");
+
+        expect([...this.set]).toEqual(["b", "c", "d"]);
+      },
+    );
+  });
+
   describe("intersection", () => {
     it<Context>("should cloned empty set", function () {
       const cloned = this.set.intersection(new List());

@@ -223,7 +223,7 @@ export class OrderedSet<T> extends List<T> {
    *
    * `O(n)`
    *
-   * Infra Standard](https://infra.spec.whatwg.org/#set-replace)
+   * [Infra Standard](https://infra.spec.whatwg.org/#set-replace)
    */
   override replace(oldItem: T, newItem: T): void {
     let replaced = false;
@@ -232,6 +232,30 @@ export class OrderedSet<T> extends List<T> {
       const item = this[index]!;
 
       if (oldItem === item || item === newItem) {
+        if (replaced) {
+          this.#splice(index, 1);
+          index--;
+        } else {
+          replaced = true;
+          this.#splice(index, 1, newItem);
+        }
+      }
+    }
+  }
+
+  /** Replace the first matched {@link condition} and {@link remove} all other instances.
+   *
+   * `O(n)`
+   *
+   * [Infra Standard](https://infra.spec.whatwg.org/#set-replace)
+   */
+  override replaceIf(condition: (item: T) => boolean, newItem: T): void {
+    let replaced = false;
+
+    for (let index = 0; index < this.size; index++) {
+      const item = this[index]!;
+
+      if (condition(item) || item === newItem) {
         if (replaced) {
           this.#splice(index, 1);
           index--;
