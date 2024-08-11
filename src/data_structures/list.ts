@@ -92,15 +92,25 @@ export class List<T> {
     else this.#splice(index, 0, item);
   }
 
+  /** Replace {@link oldItem} to {@link newItem}.
+   *
+   * `O(n)`
+   *
+   * [Infra Standard](https://infra.spec.whatwg.org/#list-replace)
+   */
+  replace(oldItem: T, newItem: T): void {
+    for (const [index, item] of this.#entries()) {
+      if (oldItem === item) this.#splice(index, 1, newItem);
+    }
+  }
+
   /** Replace all items from the list that match a given {@link condition} with the given {@link newItem}.
    *
    * `O(n)`
    *
    * [Infra Standard](https://infra.spec.whatwg.org/#list-replace)
    */
-  replace(conditionOrOldItem: ((item: T) => boolean) | T, newItem: T): void {
-    const condition = normalizeCondition(conditionOrOldItem);
-
+  replaceIf(condition: (item: T) => boolean, newItem: T): void {
     for (const [index, item] of this.#entries()) {
       if (condition(item)) this.#splice(index, 1, newItem);
     }
@@ -130,13 +140,25 @@ export class List<T> {
     return list;
   }
 
+  /** Remove {@link item} from the list.
+   *
+   * `O(n)`
+   *
+   * [Infra Standard](https://infra.spec.whatwg.org/#list-remove)
+   */
+  remove(item: T): void {
+    for (const [index, listedItem] of [...this.#entries()].toReversed()) {
+      if (item === listedItem) this.#splice(index, 1);
+    }
+  }
+
   /** Remove all items from the list that match a given {@link condition}.
    *
    * `O(n)`
    *
    * [Infra Standard](https://infra.spec.whatwg.org/#list-remove)
    */
-  remove(condition: (item: T) => boolean): void {
+  removeIf(condition: (item: T) => boolean): void {
     for (const [index, item] of [...this.#entries()].toReversed()) {
       if (condition(item)) this.#splice(index, 1);
     }
@@ -268,16 +290,6 @@ export class OrderedSet<T> extends List<T> {
 
     return set;
   }
-}
-
-function normalizeCondition<T>(
-  itemOrCondition: T | ((item: T) => boolean),
-): (item: T) => boolean {
-  if (typeof itemOrCondition === "function") {
-    return itemOrCondition as (item: T) => boolean;
-  }
-
-  return (item) => itemOrCondition === item;
 }
 
 export type RangeType = "exclusive" | "inclusive";

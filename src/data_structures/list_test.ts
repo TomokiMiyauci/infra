@@ -236,12 +236,12 @@ describe("List", () => {
 
   describe("remove", () => {
     it<Context>("should remove all items", function () {
-      this.list.append(0), this.list.append(1);
-      this.list.append(2);
+      this.list.append(0), this.list.append(0);
+      this.list.append(0);
 
-      expect([...this.list]).toEqual([0, 1, 2]);
+      expect([...this.list]).toEqual([0, 0, 0]);
 
-      this.list.remove(() => true);
+      this.list.remove(0);
 
       expect([...this.list]).toEqual([]);
     });
@@ -253,7 +253,32 @@ describe("List", () => {
 
       expect([...this.list]).toEqual([0, 1, 2, 3]);
 
-      this.list.remove((item) => item === 2);
+      this.list.remove(2);
+
+      expect([...this.list]).toEqual([0, 1, 3]);
+    });
+  });
+
+  describe("removeIf", () => {
+    it<Context>("should remove all items", function () {
+      this.list.append(0), this.list.append(1);
+      this.list.append(2);
+
+      expect([...this.list]).toEqual([0, 1, 2]);
+
+      this.list.removeIf(() => true);
+
+      expect([...this.list]).toEqual([]);
+    });
+
+    it<Context>("should remove matched items", function () {
+      this.list.append(0), this.list.append(1);
+      this.list.append(2);
+      this.list.append(3);
+
+      expect([...this.list]).toEqual([0, 1, 2, 3]);
+
+      this.list.removeIf((item) => item === 2);
 
       expect([...this.list]).toEqual([0, 1, 3]);
     });
