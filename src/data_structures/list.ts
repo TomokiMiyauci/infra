@@ -4,26 +4,13 @@ const { push, length, unshift, pop, includes, splice, entries } =
   Array.prototype;
 const iterator = Array.prototype[Symbol.iterator];
 
-/** An ordered sequence consisting of a finite number of items.
- *
- * [Infra Living Standard](https://infra.spec.whatwg.org/#list)
- */
-export class List<T> {
+class BaseList<T> {
   #pop = pop;
-  #unshift = unshift;
-  #push = push;
   #includes = includes;
-  #splice = splice;
-  #entries = entries as () => IterableIterator<[number, T]>;
 
-  constructor(iterable?: Iterable<T> | null) {
-    if (iterable) { for (const item of iterable) this.#push(item); }
-  }
+  private length = length;
 
-  /**
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-iterate)
-   */
-  [Symbol.iterator] = iterator as () => IterableIterator<T>;
+  readonly [index: number]: T;
 
   /** The number of items.
    *
@@ -33,13 +20,60 @@ export class List<T> {
     return this.length;
   }
 
-  /** Whether this {@link size} is zero or not.
-   */
+  /** Whether this {@link size} is zero or not. */
   get isEmpty(): boolean {
     return !this.size;
   }
 
-  readonly [index: number]: T;
+  /**
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-iterate)
+   */
+  [Symbol.iterator] = iterator as () => IterableIterator<T>;
+
+  /** Remove all items.
+   *
+   * `O(n)`
+   *
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-size)
+   */
+  empty(): void {
+    while (!this.isEmpty) this.#pop();
+  }
+
+  /** Whether the {@link item} appears in the list or not.
+   *
+   * `O(n)`
+   *
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-contain)
+   */
+  contains(item: T): boolean {
+    return this.#includes(item);
+  }
+
+  /** Return the range from 0 to this {@link size}, exclusive.
+   *
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-get-the-indices)
+   */
+  indices(): OrderedSet<number> {
+    return range(0, this.size, "exclusive");
+  }
+}
+
+/** An ordered sequence consisting of a finite number of items.
+ *
+ * [Infra Living Standard](https://infra.spec.whatwg.org/#list)
+ */
+export class List<T> extends BaseList<T> {
+  #unshift = unshift;
+  #push = push;
+  #splice = splice;
+  #entries = entries as () => IterableIterator<[number, T]>;
+
+  constructor(iterable?: Iterable<T> | null) {
+    super();
+
+    if (iterable) { for (const item of iterable) this.#push(item); }
+  }
 
   /** Add a {@link item} to the end.
    *
@@ -69,16 +103,6 @@ export class List<T> {
    */
   prepend(item: T): void {
     this.#unshift(item);
-  }
-
-  /** Remove all items.
-   *
-   * `O(n)`
-   *
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-size)
-   */
-  empty(): void {
-    while (!this.isEmpty) this.#pop();
   }
 
   /** Insert {@link item} before {@link index}.
@@ -114,16 +138,6 @@ export class List<T> {
     for (const [index, item] of this.#entries()) {
       if (condition(item)) this.#splice(index, 1, newItem);
     }
-  }
-
-  /** Whether the {@link item} appears in the list or not.
-   *
-   * `O(n)`
-   *
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-contain)
-   */
-  contains(item: T): boolean {
-    return this.#includes(item);
   }
 
   /** Create a new list clone, of the same designation.
@@ -163,16 +177,6 @@ export class List<T> {
       if (condition(item)) this.#splice(index, 1);
     }
   }
-
-  /** Return the range from 0 to this {@link size}, exclusive.
-   *
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-get-the-indices)
-   */
-  indices(): OrderedSet<number> {
-    return range(0, this.size, "exclusive");
-  }
-
-  private length = length;
 }
 
 export interface ListLike<T> {
