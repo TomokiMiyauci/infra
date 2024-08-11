@@ -6,7 +6,7 @@ const iterator = Array.prototype[Symbol.iterator];
 
 /** An ordered sequence consisting of a finite number of items.
  *
- * [Infra Standard](https://infra.spec.whatwg.org/#list)
+ * [Infra Living Standard](https://infra.spec.whatwg.org/#list)
  */
 export class List<T> {
   #pop = pop;
@@ -21,13 +21,13 @@ export class List<T> {
   }
 
   /**
-   * [Infra Standard](https://infra.spec.whatwg.org/#list-iterate)
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-iterate)
    */
   [Symbol.iterator] = iterator as () => IterableIterator<T>;
 
   /** The number of items.
    *
-   * [Infra Standard](https://infra.spec.whatwg.org/#list-size)
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-size)
    */
   get size(): number {
     return this.length;
@@ -45,7 +45,7 @@ export class List<T> {
    *
    * `O(1)`
    *
-   * [Infra Standard](https://infra.spec.whatwg.org/#list-append)
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-append)
    */
   append(item: T): void {
     this.#push(item);
@@ -55,7 +55,7 @@ export class List<T> {
    *
    * `O(n)`
    *
-   * [Infra Standard](https://infra.spec.whatwg.org/#list-extend)
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-extend)
    */
   extend(iter: Iterable<T>): void {
     for (const item of iter) this.append(item);
@@ -65,7 +65,7 @@ export class List<T> {
    *
    * `O(1)`
    *
-   * [Infra Standard](https://infra.spec.whatwg.org/#list-prepend)
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-prepend)
    */
   prepend(item: T): void {
     this.#unshift(item);
@@ -75,7 +75,7 @@ export class List<T> {
    *
    * `O(n)`
    *
-   * [Infra Standard](https://infra.spec.whatwg.org/#list-size)
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-size)
    */
   empty(): void {
     while (!this.isEmpty) this.#pop();
@@ -85,7 +85,7 @@ export class List<T> {
    *
    * `O(1)`
    *
-   * [Infra Standard](https://infra.spec.whatwg.org/#list-insert)
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-insert)
    */
   insert(index: number, item: T): void {
     if (index === 0) this.prepend(item);
@@ -96,7 +96,7 @@ export class List<T> {
    *
    * `O(n)`
    *
-   * [Infra Standard](https://infra.spec.whatwg.org/#list-replace)
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-replace)
    */
   replace(oldItem: T, newItem: T): void {
     for (const [index, item] of this.#entries()) {
@@ -108,7 +108,7 @@ export class List<T> {
    *
    * `O(n)`
    *
-   * [Infra Standard](https://infra.spec.whatwg.org/#list-replace)
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-replace)
    */
   replaceIf(condition: (item: T) => boolean, newItem: T): void {
     for (const [index, item] of this.#entries()) {
@@ -120,7 +120,7 @@ export class List<T> {
    *
    * `O(n)`
    *
-   * [Infra Standard](https://infra.spec.whatwg.org/#list-contain)
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-contain)
    */
   contains(item: T): boolean {
     return this.#includes(item);
@@ -130,7 +130,7 @@ export class List<T> {
    *
    * `O(n)`
    *
-   * [Infra Standard](https://infra.spec.whatwg.org/#list-clone)
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-clone)
    */
   clone(): List<T> {
     const list = new List<T>();
@@ -144,7 +144,7 @@ export class List<T> {
    *
    * `O(n)`
    *
-   * [Infra Standard](https://infra.spec.whatwg.org/#list-remove)
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-remove)
    */
   remove(item: T): void {
     for (const [index, listedItem] of [...this.#entries()].toReversed()) {
@@ -156,7 +156,7 @@ export class List<T> {
    *
    * `O(n)`
    *
-   * [Infra Standard](https://infra.spec.whatwg.org/#list-remove)
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-remove)
    */
   removeIf(condition: (item: T) => boolean): void {
     for (const [index, item] of [...this.#entries()].toReversed()) {
@@ -166,7 +166,7 @@ export class List<T> {
 
   /** Return the range from 0 to this {@link size}, exclusive.
    *
-   * [Infra Standard](https://infra.spec.whatwg.org/#list-get-the-indices)
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-get-the-indices)
    */
   indices(): OrderedSet<number> {
     return range(0, this.size, "exclusive");
@@ -184,7 +184,7 @@ export interface ListLike<T> {
 
 /** A {@link List list} with the additional semantic that it must not contain the same item twice.
  *
- * [Infra Standard](https://infra.spec.whatwg.org/#sets)
+ * [Infra Living Standard](https://infra.spec.whatwg.org/#sets)
  */
 export class OrderedSet<T> extends List<T> {
   #splice = splice;
@@ -203,7 +203,7 @@ export class OrderedSet<T> extends List<T> {
    *
    * `O(n)`
    *
-   * [Infra Standard](https://infra.spec.whatwg.org/#set-append)
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#set-append)
    */
   override append(item: T): void {
     if (!this.contains(item)) super.append(item);
@@ -213,7 +213,7 @@ export class OrderedSet<T> extends List<T> {
    *
    * `O(n)`
    *
-   * [Infra Standard](https://infra.spec.whatwg.org/#set-prepend)
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#set-prepend)
    */
   override prepend(item: T): void {
     if (!this.contains(item)) super.prepend(item);
@@ -223,7 +223,7 @@ export class OrderedSet<T> extends List<T> {
    *
    * `O(n)`
    *
-   * [Infra Standard](https://infra.spec.whatwg.org/#set-replace)
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#set-replace)
    */
   override replace(oldItem: T, newItem: T): void {
     let replaced = false;
@@ -247,7 +247,7 @@ export class OrderedSet<T> extends List<T> {
    *
    * `O(n)`
    *
-   * [Infra Standard](https://infra.spec.whatwg.org/#set-replace)
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#set-replace)
    */
   override replaceIf(condition: (item: T) => boolean, newItem: T): void {
     let replaced = false;
@@ -276,7 +276,7 @@ export class OrderedSet<T> extends List<T> {
   }
 
   /**
-   * [Infra Standard](https://infra.spec.whatwg.org/#set-subset)
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#set-subset)
    */
   isSubsetOf(other: ListLike<T>): boolean {
     for (const item of this) if (!other.contains(item)) return false;
@@ -285,7 +285,7 @@ export class OrderedSet<T> extends List<T> {
   }
 
   /**
-   * [Infra Standard](https://infra.spec.whatwg.org/#set-superset)
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#set-superset)
    */
   isSupersetOf(other: ListLike<T>): boolean {
     for (const item of other) if (!this.contains(item)) return false;
@@ -294,7 +294,7 @@ export class OrderedSet<T> extends List<T> {
   }
 
   /**
-   * [Infra Standard](https://infra.spec.whatwg.org/#set-intersection)
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#set-intersection)
    */
   intersection(iter: ListLike<T>): OrderedSet<T> {
     const set = new OrderedSet<T>();
@@ -305,7 +305,7 @@ export class OrderedSet<T> extends List<T> {
   }
 
   /**
-   * [Infra Standard](https://infra.spec.whatwg.org/#set-union)
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#set-union)
    */
   union(iter: Iterable<T>): OrderedSet<T> {
     const set = this.clone();
@@ -320,7 +320,7 @@ export type RangeType = "exclusive" | "inclusive";
 
 /** Creates a new ordered set containing all of the integers from {@link n} up to and including {@link m} or {@link m} - 1 in consecutively increasing order.
  *
- * [Infra Standard](https://infra.spec.whatwg.org/#the-range)
+ * [Infra Living Standard](https://infra.spec.whatwg.org/#the-range)
  *
  * @throws {RangeError} If {@link n} or {@link m} is not integer.
  */
