@@ -179,6 +179,38 @@ export class List<T> extends BaseList<T> {
   }
 }
 
+/**
+ * [Infra Living Standard](https://infra.spec.whatwg.org/#queues)
+ */
+export class Queue<T> extends BaseList<T> {
+  #pop = pop;
+  #push = push;
+
+  /**
+   * `O(1)`
+   *
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#queue-enqueue)
+   */
+  enqueue(item: T): void {
+    this.#push(item);
+  }
+
+  /**
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#queue-dequeue)
+   */
+  dequeue(): T | undefined {
+    return this.#pop();
+  }
+
+  clone(): Queue<T> {
+    const queue = new Queue<T>();
+
+    for (const item of this) queue.#push(item);
+
+    return queue;
+  }
+}
+
 export interface ListLike<T> {
   /** Whether the {@link item} appears in the list-like or not. */
   contains(item: T): boolean;
