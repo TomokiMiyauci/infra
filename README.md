@@ -1,7 +1,7 @@
 # infra
 
-Reference implementation of whatwg
-[Infra Living Standard](https://infra.spec.whatwg.org/).
+[Infra](https://infra.spec.whatwg.org/), based on WHATWG spec reference
+implementation.
 
 This project can be used for reference implementations of other living
 standards.
