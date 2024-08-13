@@ -1,5 +1,7 @@
 # infra
 
+> 🚧 WIP at [beta branch](https://github.com/TomokiMiyauci/infra/tree/beta)
+
 [Infra](https://infra.spec.whatwg.org/), based on WHATWG spec reference
 implementation.
 
@@ -94,7 +96,7 @@ while (!queue.isEmpty) queue.dequeue();
 
 #### OrderedSet
 
-[OrderedSet](https://infra.spec.whatwg.org/#ordered-set) is a [List](#list) and
+[OrderedSet](https://infra.spec.whatwg.org/#ordered-set) is a [list](#list) and
 has the semantics that items do not overlap.
 
 ```ts
