@@ -13,6 +13,7 @@ standards.
   - [Primitive Data Types](#primitive-data-types)
   - [Data Structures](#data-structures)
     - [List](#list)
+    - [Queue](#queue)
     - [OrderedSet](#orderedset)
 - [API](#api)
 - [Contributing](#contributing)
@@ -66,13 +67,29 @@ list.empty();
 list.extend([2, 3, 4]);
 list.insert(3, Infinity);
 list.replace(3, 6);
-list.remove((item) => item % 3 === 1);
+list.remove(2);
+list.removeIf((item) => item % 3 === 1);
 
 for (const item of list) {}
 
 const has = list.contains(3);
 const other = list.clone();
 const indices = list.indices();
+```
+
+#### Queue
+
+[Queue](https://infra.spec.whatwg.org/#queues) is a [list](#list). It is
+available `enqueue` and `dequeue` instead of list operations.
+
+```ts
+import { Queue } from "@miyauci/infra";
+
+const queue = new Queue();
+
+queue.enqueue("value");
+
+while (!queue.isEmpty) queue.dequeue();
 ```
 
 #### OrderedSet
