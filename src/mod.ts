@@ -1,6 +1,7 @@
 export {
   List,
   type ListLike,
+  type Order,
   OrderedSet,
   Queue,
   range,

@@ -177,7 +177,33 @@ export class List<T> extends BaseList<T> {
       if (condition(item)) this.#splice(index, 1);
     }
   }
+
+  /** Return list with sort by {@link order}.
+   *
+   * `O(n log n)`
+   *
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-sort-in-ascending-order)
+   */
+  sort(order: Order, lessThanAlgo?: (a: T, b: T) => boolean): List<T> {
+    const compareFn = (a: T, b: T) => {
+      const result = lessThanAlgo ? lessThanAlgo(a, b) : a < b;
+
+      switch (order) {
+        case "asc":
+          return result ? -1 : 1;
+
+        case "desc":
+          return result ? 1 : -1;
+      }
+    };
+
+    const sorted = [...this].toSorted(compareFn);
+
+    return new List<T>(sorted);
+  }
 }
+
+export type Order = "asc" | "desc";
 
 /**
  * [Infra Living Standard](https://infra.spec.whatwg.org/#queues)

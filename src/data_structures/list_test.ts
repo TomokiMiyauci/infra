@@ -306,6 +306,66 @@ describe("List", () => {
       },
     );
   });
+
+  describe("sort", () => {
+    describe("ASC", () => {
+      it<Context>("should sort by asc", function () {
+        this.list.append(2);
+        this.list.append(0);
+        this.list.append(1);
+
+        expect([...this.list]).toEqual([2, 0, 1]);
+
+        expect([...this.list.sort("asc")]).toEqual([0, 1, 2]);
+        expect([...this.list]).toEqual([2, 0, 1]);
+      });
+
+      it<Context>("should sort by asc with custom compare", function () {
+        const list = new List([2, 0, 1]);
+
+        expect([...list.sort("asc", (a: number, b: number) => {
+          return a < b;
+        })]).toEqual([0, 1, 2]);
+      });
+
+      it<Context>("should sort by asc with custom compare 2", function () {
+        const list = new List([2, 0, 1, 0, 2, 1, 1, 2, 0]);
+
+        expect([...list.sort("asc", (a: number, b: number) => {
+          return a < b;
+        })]).toEqual([0, 0, 0, 1, 1, 1, 2, 2, 2]);
+      });
+    });
+
+    describe("DESC", () => {
+      it<Context>("should sort by desc", function () {
+        this.list.append(2);
+        this.list.append(0);
+        this.list.append(1);
+
+        expect([...this.list]).toEqual([2, 0, 1]);
+
+        expect([...this.list.sort("desc")]).toEqual([2, 1, 0]);
+        expect([...this.list]).toEqual([2, 0, 1]);
+      });
+
+      it<Context>("should sort by desc with custom compare", function () {
+        const list = new List([2, 0, 1]);
+
+        expect([...list.sort("desc", (a: number, b: number) => {
+          return a < b;
+        })]).toEqual([2, 1, 0]);
+      });
+
+      it<Context>("should sort by desc with custom compare 2", function () {
+        const list = new List([2, 0, 1, 0, 2, 1, 1, 2, 0]);
+
+        expect([...list.sort("desc", (a: number, b: number) => {
+          return a < b;
+        })]).toEqual([2, 2, 2, 1, 1, 1, 0, 0, 0]);
+      });
+    });
+  });
 });
 
 describe("OrderedSet", () => {
