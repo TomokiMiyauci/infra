@@ -206,6 +206,59 @@ export class List<T> extends OrderedList<T> {
   }
 }
 
+/** A {@link List}, but conventionally, the following operations are used to operate on it, instead of using {@link List.append append}, {@link List.prepend prepend}, or {@link List.remove remove}.
+ *
+ * [Infra Living Standard](https://infra.spec.whatwg.org/#stacks)
+ */
+export class Stack<T> extends BaseList<T> {
+  #pop = pop as () => T | undefined;
+
+  /**
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#stack-push)
+   */
+  push(item: T): void {
+    super.append(item);
+  }
+
+  /**
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#stack-pop)
+   */
+  pop(): T | undefined {
+    return this.#pop();
+  }
+
+  /**
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#stack-peek)
+   */
+  peek(): T | undefined {
+    return this[this.size - 1];
+  }
+}
+
+/**
+ * [Infra Living Standard](https://infra.spec.whatwg.org/#queues)
+ */
+export class Queue<T> extends BaseList<T> {
+  #pop = pop as () => T | undefined;
+  #push = push;
+
+  /**
+   * `O(1)`
+   *
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#queue-enqueue)
+   */
+  enqueue(item: T): void {
+    this.#push(item);
+  }
+
+  /**
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#queue-dequeue)
+   */
+  dequeue(): T | undefined {
+    return this.#pop();
+  }
+}
+
 /** A {@link List list} with the additional semantic that it must not contain the same item twice.
  *
  * [Infra Living Standard](https://infra.spec.whatwg.org/#sets)
@@ -330,30 +383,6 @@ export class Set<T> extends OrderedList<T> {
     for (const item of iter) set.append(item);
 
     return set;
-  }
-}
-
-/**
- * [Infra Living Standard](https://infra.spec.whatwg.org/#queues)
- */
-export class Queue<T> extends BaseList<T> {
-  #pop = pop as () => T | undefined;
-  #push = push;
-
-  /**
-   * `O(1)`
-   *
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#queue-enqueue)
-   */
-  enqueue(item: T): void {
-    this.#push(item);
-  }
-
-  /**
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#queue-dequeue)
-   */
-  dequeue(): T | undefined {
-    return this.#pop();
   }
 }
 

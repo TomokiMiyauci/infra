@@ -1,10 +1,11 @@
 import { expect } from "@std/expect";
 import { beforeEach, describe, it } from "@std/testing/bdd";
-import { List, range, Set } from "./list.ts";
+import { List, range, Set, Stack } from "./list.ts";
 
 interface Context {
   list: List<unknown>;
   set: Set<unknown>;
+  stack: Stack<unknown>;
 }
 
 describe("List", () => {
@@ -364,6 +365,70 @@ describe("List", () => {
           return a < b;
         })]).toEqual([2, 2, 2, 1, 1, 1, 0, 0, 0]);
       });
+    });
+  });
+});
+
+describe("Stack", () => {
+  beforeEach<Context>(function () {
+    this.stack = new Stack();
+  });
+
+  describe("push", () => {
+    it<Context>("should add item", function () {
+      this.stack.push(0);
+
+      expect(this.stack.size).toBe(1);
+      expect(this.stack.peek()).toBe(0);
+      expect(this.stack[0]).toBe(0);
+    });
+
+    it<Context>("should add items", function () {
+      this.stack.push(0);
+      this.stack.push(0);
+      this.stack.push(1);
+
+      expect(this.stack.size).toBe(3);
+      expect(this.stack.peek()).toBe(1);
+      expect(this.stack[0]).toBe(0);
+      expect(this.stack[1]).toBe(0);
+      expect(this.stack[2]).toBe(1);
+    });
+  });
+
+  describe("pop", () => {
+    it<Context>("should return undefined if empty", function () {
+      expect(this.stack.size).toBe(0);
+      expect(this.stack.pop()).toBe(undefined);
+      expect(this.stack.size).toBe(0);
+    });
+
+    it<Context>("should return value and then to be empty", function () {
+      this.stack.push(0);
+
+      expect(this.stack.size).toBe(1);
+      expect(this.stack.pop()).toBe(0);
+      expect(this.stack.size).toBe(0);
+    });
+  });
+
+  describe("peek", () => {
+    it<Context>("should return undefined if empty", function () {
+      expect(this.stack.peek()).toBe(undefined);
+    });
+
+    it<Context>("should return last value", function () {
+      this.stack.push(0);
+
+      expect(this.stack.peek()).toBe(0);
+
+      this.stack.push(1);
+
+      expect(this.stack.peek()).toBe(1);
+
+      this.stack.pop();
+
+      expect(this.stack.peek()).toBe(0);
     });
   });
 });
