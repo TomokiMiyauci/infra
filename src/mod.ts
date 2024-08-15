@@ -2,8 +2,8 @@ export {
   List,
   type ListLike,
   type Order,
-  OrderedSet,
   Queue,
   range,
   type RangeType,
+  Set,
 } from "./data_structures/list.ts";

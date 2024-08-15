@@ -1,10 +1,10 @@
 import { expect } from "@std/expect";
 import { beforeEach, describe, it } from "@std/testing/bdd";
-import { List, OrderedSet, range } from "./list.ts";
+import { List, range, Set } from "./list.ts";
 
 interface Context {
   list: List<unknown>;
-  set: OrderedSet<unknown>;
+  set: Set<unknown>;
 }
 
 describe("List", () => {
@@ -368,20 +368,20 @@ describe("List", () => {
   });
 });
 
-describe("OrderedSet", () => {
+describe("Set", () => {
   beforeEach<Context>(function () {
-    this.set = new OrderedSet();
+    this.set = new Set();
   });
 
   describe("construct", () => {
     it("should add initial value", () => {
-      const set = new OrderedSet([1, 2, 3]);
+      const set = new Set([1, 2, 3]);
 
       expect([...set]).toEqual([1, 2, 3]);
     });
 
     it("should add initial value except duplication", () => {
-      const set = new OrderedSet([1, 1, 1, 2, 2, 2]);
+      const set = new Set([1, 1, 1, 2, 2, 2]);
 
       expect([...set]).toEqual([1, 2]);
     });
@@ -716,7 +716,7 @@ describe("OrderedSet", () => {
     it<Context>("should return cloned union set 2", function () {
       this.set.append(0), this.set.append(1);
 
-      const other = new OrderedSet();
+      const other = new Set();
       other.append(-1), other.append(3);
       const set = this.set.union(other);
 
@@ -732,7 +732,7 @@ describe("OrderedSet", () => {
 
   describe("isSubsetOf", () => {
     it<Context>("should return empty if each set is empty", function () {
-      expect(this.set.isSubsetOf(new OrderedSet())).toBeTruthy();
+      expect(this.set.isSubsetOf(new Set())).toBeTruthy();
     });
 
     it<Context>(
@@ -743,7 +743,7 @@ describe("OrderedSet", () => {
           this.set.append(12),
           this.set.append(16);
 
-        const other = new OrderedSet();
+        const other = new Set();
 
         other.append(2),
           other.append(4),
@@ -769,7 +769,7 @@ describe("OrderedSet", () => {
         this.set.append(11);
         this.set.append(13);
 
-        const other = new OrderedSet();
+        const other = new Set();
 
         other.append(3),
           other.append(5),
@@ -786,7 +786,7 @@ describe("OrderedSet", () => {
       function () {
         this.set.append(1), this.set.append(2), this.set.append(3);
 
-        const other = new OrderedSet();
+        const other = new Set();
 
         other.append(1),
           other.append(2),
@@ -798,7 +798,7 @@ describe("OrderedSet", () => {
 
   describe("isSupersetOf", () => {
     it<Context>("should return empty if each set is empty", function () {
-      expect(this.set.isSupersetOf(new OrderedSet())).toBeTruthy();
+      expect(this.set.isSupersetOf(new Set())).toBeTruthy();
     });
 
     it<Context>(
@@ -813,7 +813,7 @@ describe("OrderedSet", () => {
           this.set.append(14),
           this.set.append(16);
 
-        const other = new OrderedSet();
+        const other = new Set();
 
         other.append(4), other.append(8), other.append(12), other.append(16);
 
@@ -831,7 +831,7 @@ describe("OrderedSet", () => {
           this.set.append(11),
           this.set.append(13);
 
-        const other = new OrderedSet();
+        const other = new Set();
 
         other.append(2), other.append(3), other.append(5), other.append(7);
         other.append(9);
@@ -847,7 +847,7 @@ describe("OrderedSet", () => {
       function () {
         this.set.append(1), this.set.append(2), this.set.append(3);
 
-        const other = new OrderedSet();
+        const other = new Set();
 
         other.append(1),
           other.append(2),
