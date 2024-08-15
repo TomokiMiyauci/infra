@@ -15,8 +15,9 @@ standards.
   - [Primitive Data Types](#primitive-data-types)
   - [Data Structures](#data-structures)
     - [List](#list)
+    - [Stack](#stack)
     - [Queue](#queue)
-    - [OrderedSet](#orderedset)
+    - [Set](#set)
 - [API](#api)
 - [Contributing](#contributing)
 - [License](#license)
@@ -79,6 +80,22 @@ const other = list.clone();
 const indices = list.indices();
 ```
 
+#### Stack
+
+[Queue](https://infra.spec.whatwg.org/#queues) is a [list](#list). It is
+available `push`, `pop` and `peek` instead of list operations.
+
+```ts
+import { Stack } from "@miyauci/infra";
+
+const stack = new Stack();
+
+stack.push(0);
+
+const item = stack.pop();
+const lastItem = stack.peek();
+```
+
 #### Queue
 
 [Queue](https://infra.spec.whatwg.org/#queues) is a [list](#list). It is
@@ -94,16 +111,16 @@ queue.enqueue("value");
 while (!queue.isEmpty) queue.dequeue();
 ```
 
-#### OrderedSet
+#### Set
 
-[OrderedSet](https://infra.spec.whatwg.org/#ordered-set) is a [list](#list) and
-has the semantics that items do not overlap.
+[Set](https://infra.spec.whatwg.org/#ordered-set) is a [list](#list) and has the
+semantics that items do not overlap.
 
 ```ts
-import { type List, OrderedSet } from "@miyauci/infra";
+import { type List, Set } from "@miyauci/infra";
 
 declare const listLike: List<number>;
-const set = new OrderedSet<number>();
+const set = new Set<number>();
 
 const intersection = set.intersection(listLike);
 const union = set.union(listLike);
