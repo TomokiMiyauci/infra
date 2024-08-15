@@ -1,3 +1,17 @@
+# [1.0.0-beta.2](https://github.com/TomokiMiyauci/infra/compare/1.0.0-beta.1...1.0.0-beta.2) (2024-08-15)
+
+
+### Bug Fixes
+
+* **list:** fix to queue#dequeue algorithm, add test case ([91b2953](https://github.com/TomokiMiyauci/infra/commit/91b29533d6f001d5b24b5f21e3ca0207ed920c17))
+
+
+### Features
+
+* **list:** add sort method ([54f1721](https://github.com/TomokiMiyauci/infra/commit/54f17219bd69ab1917d24d5e6d569a6c3b77b4dc))
+* **list:** add stack implementation ([84749be](https://github.com/TomokiMiyauci/infra/commit/84749bea2f6225060a9e69b24c66ff31bcc243be))
+* **list:** rename ordered set to set, split base class ([fc0482a](https://github.com/TomokiMiyauci/infra/commit/fc0482a2f4cb2927645a03adb26310ddbf0ecc0b))
+
 # 1.0.0-beta.1 (2024-08-13)
 
 
