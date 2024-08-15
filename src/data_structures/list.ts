@@ -1,6 +1,6 @@
 import { assertInteger } from "./util.ts";
 
-const { push, length, unshift, pop, includes, splice, entries } =
+const { push, length, unshift, pop, includes, splice, entries, shift } =
   Array.prototype;
 const iterator = Array.prototype[Symbol.iterator];
 
@@ -235,12 +235,12 @@ export class Stack<T> extends BaseList<T> {
   }
 }
 
-/**
+/** A {@link List}, but conventionally, the following operations are used to operate on it, instead of using {@link List.append append}, {@link List.prepend prepend}, or {@link List.remove remove}.
+ *
  * [Infra Living Standard](https://infra.spec.whatwg.org/#queues)
  */
 export class Queue<T> extends BaseList<T> {
-  #pop = pop as () => T | undefined;
-  #push = push;
+  #shift = shift as () => T | undefined;
 
   /**
    * `O(1)`
@@ -248,14 +248,16 @@ export class Queue<T> extends BaseList<T> {
    * [Infra Living Standard](https://infra.spec.whatwg.org/#queue-enqueue)
    */
   enqueue(item: T): void {
-    this.#push(item);
+    super.append(item);
   }
 
   /**
+   * `O(1)`
+   *
    * [Infra Living Standard](https://infra.spec.whatwg.org/#queue-dequeue)
    */
   dequeue(): T | undefined {
-    return this.#pop();
+    return this.#shift();
   }
 }
 

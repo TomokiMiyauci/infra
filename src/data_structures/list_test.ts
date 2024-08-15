@@ -1,11 +1,12 @@
 import { expect } from "@std/expect";
 import { beforeEach, describe, it } from "@std/testing/bdd";
-import { List, range, Set, Stack } from "./list.ts";
+import { List, Queue, range, Set, Stack } from "./list.ts";
 
 interface Context {
   list: List<unknown>;
   set: Set<unknown>;
   stack: Stack<unknown>;
+  queue: Queue<unknown>;
 }
 
 describe("List", () => {
@@ -429,6 +430,54 @@ describe("Stack", () => {
       this.stack.pop();
 
       expect(this.stack.peek()).toBe(0);
+    });
+  });
+});
+
+describe("Queue", () => {
+  beforeEach<Context>(function () {
+    this.queue = new Queue();
+  });
+
+  describe("enqueue", () => {
+    it<Context>("should add item", function () {
+      this.queue.enqueue(0);
+
+      expect(this.queue.size).toBe(1);
+      expect(this.queue[0]).toBe(0);
+    });
+
+    it<Context>("should add items", function () {
+      this.queue.enqueue(0);
+      this.queue.enqueue(0);
+      this.queue.enqueue(1);
+
+      expect(this.queue.size).toBe(3);
+      expect(this.queue[0]).toBe(0);
+      expect(this.queue[1]).toBe(0);
+      expect(this.queue[2]).toBe(1);
+    });
+  });
+
+  describe("dequeue", () => {
+    it<Context>("should return undefined if empty", function () {
+      expect(this.queue.size).toBe(0);
+      expect(this.queue.dequeue()).toBe(undefined);
+      expect(this.queue.size).toBe(0);
+    });
+
+    it<Context>("should return value and then to be empty", function () {
+      this.queue.enqueue(0);
+      this.queue.enqueue(1);
+      this.queue.enqueue(2);
+
+      expect(this.queue.size).toBe(3);
+      expect(this.queue.dequeue()).toBe(0);
+      expect(this.queue.size).toBe(2);
+      expect(this.queue.dequeue()).toBe(1);
+      expect(this.queue.size).toBe(1);
+      expect(this.queue.dequeue()).toBe(2);
+      expect(this.queue.size).toBe(0);
     });
   });
 });
