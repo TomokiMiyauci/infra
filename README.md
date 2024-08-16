@@ -18,6 +18,7 @@ standards.
     - [Stack](#stack)
     - [Queue](#queue)
     - [Set](#set)
+    - [Map](#map)
 - [API](#api)
 - [Contributing](#contributing)
 - [License](#license)
@@ -126,6 +127,28 @@ const intersection = set.intersection(listLike);
 const union = set.union(listLike);
 const isSubsetOf = set.isSubsetOf(listLike);
 const isSupersetOf = set.isSupersetOf(listLike);
+```
+
+#### Map
+
+```ts
+import { Map } from "@miyauci/infra";
+
+const map = new Map<string, string>();
+
+const size = map.size;
+const isEmpty = map.isEmpty;
+
+map.set("key", "value");
+map.get("key");
+map.remove("key");
+map.clear();
+
+const has = map.exists("key");
+const keys = map.keys();
+const values = map.values();
+const cloned = map.clone();
+const sorted = map.sort("asc", (left, right) => left[0] < right[0]);
 ```
 
 ## API

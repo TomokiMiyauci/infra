@@ -8,3 +8,4 @@ export {
   Set,
   Stack,
 } from "./data_structures/list.ts";
+export { Map } from "./data_structures/map.ts";
