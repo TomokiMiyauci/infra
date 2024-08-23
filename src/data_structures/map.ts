@@ -1,7 +1,7 @@
 import { List, type Order, Set } from "./list.ts";
 
 /** A finite ordered sequence of key value tuple with no key appearing twice.
- * [Infra Living Standard](https://infra.spec.whatwg.org/#maps)
+ * [Infra Standard](https://infra.spec.whatwg.org/#maps)
  */
 export class Map<K, V> {
   #map: globalThis.Map<K, V> = new globalThis.Map();
@@ -12,7 +12,7 @@ export class Map<K, V> {
 
   /** The number of entries.
    *
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#map-size)
+   * [Infra Standard](https://infra.spec.whatwg.org/#map-size)
    */
   get size(): number {
     return this.#map.size;
@@ -20,56 +20,56 @@ export class Map<K, V> {
 
   /** Whether this {@link size} is zero or not.
    *
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#map-is-empty)
+   * [Infra Standard](https://infra.spec.whatwg.org/#map-is-empty)
    */
   get isEmpty(): boolean {
     return !this.size;
   }
 
   /**
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#map-get)
+   * [Infra Standard](https://infra.spec.whatwg.org/#map-get)
    */
   get(key: K): V | undefined {
     return this.#map.get(key);
   }
 
   /**
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#map-set)
+   * [Infra Standard](https://infra.spec.whatwg.org/#map-set)
    */
   set(key: K, value: V): void {
     this.#map.set(key, value);
   }
 
   /**
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#map-remove)
+   * [Infra Standard](https://infra.spec.whatwg.org/#map-remove)
    */
   remove(key: K): void {
     this.#map.delete(key);
   }
 
   /**
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#map-clear)
+   * [Infra Standard](https://infra.spec.whatwg.org/#map-clear)
    */
   clear(): void {
     this.#map.clear();
   }
 
   /**
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#map-exists)
+   * [Infra Standard](https://infra.spec.whatwg.org/#map-exists)
    */
   exists(key: K): boolean {
     return this.#map.has(key);
   }
 
   /**
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#map-getting-the-keys)
+   * [Infra Standard](https://infra.spec.whatwg.org/#map-getting-the-keys)
    */
   keys(): Set<K> {
     return new Set<K>(this.#map.keys());
   }
 
   /**
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#map-getting-the-values)
+   * [Infra Standard](https://infra.spec.whatwg.org/#map-getting-the-values)
    */
   values(): List<V> {
     const list = new List<V>(this.#map.values());
@@ -78,7 +78,7 @@ export class Map<K, V> {
   }
 
   /**
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#map-clone)
+   * [Infra Standard](https://infra.spec.whatwg.org/#map-clone)
    */
   clone(): Map<K, V> {
     const cloned = new Map<K, V>();
@@ -89,7 +89,7 @@ export class Map<K, V> {
   }
 
   /**
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#map-sort-in-ascending-order)
+   * [Infra Standard](https://infra.spec.whatwg.org/#map-sort-in-ascending-order)
    */
   sort(
     order: Order,

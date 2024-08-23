@@ -26,7 +26,7 @@ class BaseList<T> {
 
   /** The number of items.
    *
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-size)
+   * [Infra Standard](https://infra.spec.whatwg.org/#list-size)
    */
   get size(): number {
     return this.length;
@@ -41,7 +41,7 @@ class BaseList<T> {
    *
    * `O(n)`
    *
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-size)
+   * [Infra Standard](https://infra.spec.whatwg.org/#list-size)
    */
   empty(): void {
     while (!this.isEmpty) this.#pop();
@@ -51,7 +51,7 @@ class BaseList<T> {
    *
    * `O(n)`
    *
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-contain)
+   * [Infra Standard](https://infra.spec.whatwg.org/#list-contain)
    */
   contains(item: T): boolean {
     return this.#includes(item);
@@ -61,7 +61,7 @@ class BaseList<T> {
    *
    * `O(n)`
    *
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-clone)
+   * [Infra Standard](https://infra.spec.whatwg.org/#list-clone)
    */
   clone(): this {
     const instance = new this.constructor();
@@ -75,7 +75,7 @@ class BaseList<T> {
    *
    * `O(n log n)`
    *
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-sort-in-ascending-order)
+   * [Infra Standard](https://infra.spec.whatwg.org/#list-sort-in-ascending-order)
    */
   sort(order: Order, lessThanAlgo?: (a: T, b: T) => boolean): this {
     const compareFn = (a: T, b: T) => {
@@ -101,7 +101,7 @@ class BaseList<T> {
 
   /** Return the range from 0 to this {@link size}, exclusive.
    *
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-get-the-indices)
+   * [Infra Standard](https://infra.spec.whatwg.org/#list-get-the-indices)
    */
   indices(): Set<number> {
     return range(0, this.size, "exclusive");
@@ -122,7 +122,7 @@ abstract class OrderedList<T> extends BaseList<T> {
    *
    * `O(n)`
    *
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-remove)
+   * [Infra Standard](https://infra.spec.whatwg.org/#list-remove)
    */
   remove(item: T): void {
     for (const [index, listedItem] of [...this.#entries()].toReversed()) {
@@ -134,7 +134,7 @@ abstract class OrderedList<T> extends BaseList<T> {
    *
    * `O(n)`
    *
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-remove)
+   * [Infra Standard](https://infra.spec.whatwg.org/#list-remove)
    */
   removeIf(condition: (item: T) => boolean): void {
     for (const [index, item] of [...this.#entries()].toReversed()) {
@@ -145,7 +145,7 @@ abstract class OrderedList<T> extends BaseList<T> {
 
 /** An ordered sequence consisting of a finite number of items.
  *
- * [Infra Living Standard](https://infra.spec.whatwg.org/#list)
+ * [Infra Standard](https://infra.spec.whatwg.org/#list)
  */
 export class List<T> extends OrderedList<T> {
   #unshift = unshift;
@@ -166,7 +166,7 @@ export class List<T> extends OrderedList<T> {
    *
    * `O(n)`
    *
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-extend)
+   * [Infra Standard](https://infra.spec.whatwg.org/#list-extend)
    */
   extend(iter: Iterable<T>): void {
     for (const item of iter) this.append(item);
@@ -180,7 +180,7 @@ export class List<T> extends OrderedList<T> {
    *
    * `O(n)`
    *
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-replace)
+   * [Infra Standard](https://infra.spec.whatwg.org/#list-replace)
    */
   replace(oldItem: T, newItem: T): void {
     for (const [index, item] of this.#entries()) {
@@ -192,7 +192,7 @@ export class List<T> extends OrderedList<T> {
    *
    * `O(n)`
    *
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-replace)
+   * [Infra Standard](https://infra.spec.whatwg.org/#list-replace)
    */
   replaceIf(condition: (item: T) => boolean, newItem: T): void {
     for (const [index, item] of this.#entries()) {
@@ -204,7 +204,7 @@ export class List<T> extends OrderedList<T> {
    *
    * `O(n)`
    *
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-replace)
+   * [Infra Standard](https://infra.spec.whatwg.org/#list-replace)
    */
   insert(index: number, item: T): void {
     if (index === 0) this.prepend(item);
@@ -214,27 +214,27 @@ export class List<T> extends OrderedList<T> {
 
 /** A {@link List}, but conventionally, the following operations are used to operate on it, instead of using {@link List.append append}, {@link List.prepend prepend}, or {@link List.remove remove}.
  *
- * [Infra Living Standard](https://infra.spec.whatwg.org/#stacks)
+ * [Infra Standard](https://infra.spec.whatwg.org/#stacks)
  */
 export class Stack<T> extends BaseList<T> {
   #pop = pop as () => T | undefined;
 
   /**
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#stack-push)
+   * [Infra Standard](https://infra.spec.whatwg.org/#stack-push)
    */
   push(item: T): void {
     super.append(item);
   }
 
   /**
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#stack-pop)
+   * [Infra Standard](https://infra.spec.whatwg.org/#stack-pop)
    */
   pop(): T | undefined {
     return this.#pop();
   }
 
   /**
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#stack-peek)
+   * [Infra Standard](https://infra.spec.whatwg.org/#stack-peek)
    */
   peek(): T | undefined {
     return this[this.size - 1];
@@ -243,7 +243,7 @@ export class Stack<T> extends BaseList<T> {
 
 /** A {@link List}, but conventionally, the following operations are used to operate on it, instead of using {@link List.append append}, {@link List.prepend prepend}, or {@link List.remove remove}.
  *
- * [Infra Living Standard](https://infra.spec.whatwg.org/#queues)
+ * [Infra Standard](https://infra.spec.whatwg.org/#queues)
  */
 export class Queue<T> extends BaseList<T> {
   #shift = shift as () => T | undefined;
@@ -251,7 +251,7 @@ export class Queue<T> extends BaseList<T> {
   /**
    * `O(1)`
    *
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#queue-enqueue)
+   * [Infra Standard](https://infra.spec.whatwg.org/#queue-enqueue)
    */
   enqueue(item: T): void {
     super.append(item);
@@ -260,7 +260,7 @@ export class Queue<T> extends BaseList<T> {
   /**
    * `O(1)`
    *
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#queue-dequeue)
+   * [Infra Standard](https://infra.spec.whatwg.org/#queue-dequeue)
    */
   dequeue(): T | undefined {
     return this.#shift();
@@ -269,7 +269,7 @@ export class Queue<T> extends BaseList<T> {
 
 /** A {@link List list} with the additional semantic that it must not contain the same item twice.
  *
- * [Infra Living Standard](https://infra.spec.whatwg.org/#sets)
+ * [Infra Standard](https://infra.spec.whatwg.org/#sets)
  */
 export class Set<T> extends OrderedList<T> {
   #unshift = unshift;
@@ -289,7 +289,7 @@ export class Set<T> extends OrderedList<T> {
    *
    * `O(n)`
    *
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#set-append)
+   * [Infra Standard](https://infra.spec.whatwg.org/#set-append)
    */
   override append(item: T): void {
     if (!super.contains(item)) super.append(item);
@@ -299,7 +299,7 @@ export class Set<T> extends OrderedList<T> {
    *
    * `O(n)`
    *
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#set-prepend)
+   * [Infra Standard](https://infra.spec.whatwg.org/#set-prepend)
    */
   override prepend(item: T): void {
     if (!this.contains(item)) this.#unshift(item);
@@ -309,7 +309,7 @@ export class Set<T> extends OrderedList<T> {
    *
    * `O(n)`
    *
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#set-replace)
+   * [Infra Standard](https://infra.spec.whatwg.org/#set-replace)
    */
   replace(oldItem: T, newItem: T): void {
     let replaced = false;
@@ -333,7 +333,7 @@ export class Set<T> extends OrderedList<T> {
    *
    * `O(n)`
    *
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#set-replace)
+   * [Infra Standard](https://infra.spec.whatwg.org/#set-replace)
    */
   replaceIf(condition: (item: T) => boolean, newItem: T): void {
     let replaced = false;
@@ -354,7 +354,7 @@ export class Set<T> extends OrderedList<T> {
   }
 
   /**
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#set-subset)
+   * [Infra Standard](https://infra.spec.whatwg.org/#set-subset)
    */
   isSubsetOf(other: ListLike<T>): boolean {
     for (const item of this) if (!other.contains(item)) return false;
@@ -363,7 +363,7 @@ export class Set<T> extends OrderedList<T> {
   }
 
   /**
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#set-superset)
+   * [Infra Standard](https://infra.spec.whatwg.org/#set-superset)
    */
   isSupersetOf(other: ListLike<T>): boolean {
     for (const item of other) if (!this.contains(item)) return false;
@@ -372,7 +372,7 @@ export class Set<T> extends OrderedList<T> {
   }
 
   /**
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#set-intersection)
+   * [Infra Standard](https://infra.spec.whatwg.org/#set-intersection)
    */
   intersection(iter: ListLike<T>): Set<T> {
     const set = new Set<T>();
@@ -383,7 +383,7 @@ export class Set<T> extends OrderedList<T> {
   }
 
   /**
-   * [Infra Living Standard](https://infra.spec.whatwg.org/#set-union)
+   * [Infra Standard](https://infra.spec.whatwg.org/#set-union)
    */
   union(iter: Iterable<T>): Set<T> {
     const set = this.clone();
@@ -407,7 +407,7 @@ export type RangeType = "exclusive" | "inclusive";
 
 /** Creates a new ordered set containing all of the integers from {@link n} up to and including {@link m} or {@link m} - 1 in consecutively increasing order.
  *
- * [Infra Living Standard](https://infra.spec.whatwg.org/#the-range)
+ * [Infra Standard](https://infra.spec.whatwg.org/#the-range)
  *
  * @throws {RangeError} If {@link n} or {@link m} is not integer.
  */
