@@ -118,11 +118,6 @@ abstract class OrderedList<T> extends BaseList<T> {
 
   abstract prepend(item: T): void;
 
-  insert(index: number, item: T): void {
-    if (index === 0) this.prepend(item);
-    else this.#splice(index, 0, item);
-  }
-
   /** Remove {@link item} from the list.
    *
    * `O(n)`
@@ -203,6 +198,17 @@ export class List<T> extends OrderedList<T> {
     for (const [index, item] of this.#entries()) {
       if (condition(item)) this.#splice(index, 1, newItem);
     }
+  }
+
+  /** Add the given {@link item} to the list between the given {@link index} − 1 and the given {@link index}. If the given {@link index} is 0, then {@link prepend} the given {@link item} to the list.
+   *
+   * `O(n)`
+   *
+   * [Infra Living Standard](https://infra.spec.whatwg.org/#list-replace)
+   */
+  insert(index: number, item: T): void {
+    if (index === 0) this.prepend(item);
+    else this.#splice(index, 0, item);
   }
 }
 
