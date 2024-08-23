@@ -1,5 +1,11 @@
 # infra
 
+[![JSR](https://jsr.io/badges/@miyauci/infra)](https://jsr.io/@miyauci/infra)
+[![codecov](https://codecov.io/gh/TomokiMiyauci/infra/graph/badge.svg?token=y08xVJ1mvm)](https://codecov.io/gh/TomokiMiyauci/infra)
+[![GitHub](https://img.shields.io/github/license/TomokiMiyauci/infra)](https://github.com/TomokiMiyauci/infra/blob/main/LICENSE)
+[![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
+[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg)](https://github.com/RichardLitt/standard-readme)
+
 [Infra](https://infra.spec.whatwg.org/) Standard, based on WHATWG spec reference
 implementation.
 
