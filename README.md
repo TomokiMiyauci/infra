@@ -1,12 +1,7 @@
 # infra
 
-> 🚧 WIP at [beta branch](https://github.com/TomokiMiyauci/infra/tree/beta)
-
-[Infra](https://infra.spec.whatwg.org/), based on WHATWG spec reference
+[Infra](https://infra.spec.whatwg.org/) Standard, based on WHATWG spec reference
 implementation.
-
-This project can be used for reference implementations of other living
-standards.
 
 ## Table of Contents <!-- omit in toc -->
 
@@ -130,6 +125,9 @@ const isSupersetOf = set.isSupersetOf(listLike);
 ```
 
 #### Map
+
+[Map](https://infra.spec.whatwg.org/#ordered-map) is a finite ordered sequence
+of tuples, each consisting of a key and a value, with no key appearing twice.
 
 ```ts
 import { Map } from "@miyauci/infra";
