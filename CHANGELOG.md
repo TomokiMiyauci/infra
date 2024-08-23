@@ -1,3 +1,10 @@
+# [1.0.0-beta.3](https://github.com/TomokiMiyauci/infra/compare/1.0.0-beta.2...1.0.0-beta.3) (2024-08-16)
+
+
+### Features
+
+* **map:** add map implementation ([8275416](https://github.com/TomokiMiyauci/infra/commit/8275416f52376cc0c6c66904bfa8c13e5fc6cb38))
+
 # [1.0.0-beta.2](https://github.com/TomokiMiyauci/infra/compare/1.0.0-beta.1...1.0.0-beta.2) (2024-08-15)
 
 
