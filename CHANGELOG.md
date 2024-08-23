@@ -1,3 +1,15 @@
+# [1.0.0-beta.4](https://github.com/TomokiMiyauci/infra/compare/1.0.0-beta.3...1.0.0-beta.4) (2024-08-23)
+
+
+### Bug Fixes
+
+* fix typo ([2228752](https://github.com/TomokiMiyauci/infra/commit/2228752e5ebfcdde7902dd6791a76deeb0305a27))
+
+
+### Features
+
+* **list:** remove `insert` method from Set ([2e2a3a3](https://github.com/TomokiMiyauci/infra/commit/2e2a3a337a227b58a93fb11f054f3910f37fd756))
+
 # [1.0.0-beta.3](https://github.com/TomokiMiyauci/infra/compare/1.0.0-beta.2...1.0.0-beta.3) (2024-08-16)
 
 
