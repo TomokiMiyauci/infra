@@ -158,6 +158,12 @@ export class List<T> extends OrderedList<T> {
     if (iterable) { for (const item of iterable) super.append(item); }
   }
 
+  /** Add the given {@link item} to the end.
+   *
+   * `O(1)`
+   *
+   * [Infra Standard](https://infra.spec.whatwg.org/#list-append)
+   */
   public override append(item: T): void {
     super.append(item);
   }
@@ -172,6 +178,12 @@ export class List<T> extends OrderedList<T> {
     for (const item of iter) this.append(item);
   }
 
+  /** Add the given {@link item} to the beginning.
+   *
+   * `O(1)`
+   *
+   * [Infra Standard](https://infra.spec.whatwg.org/#list-prepend)
+   */
   override prepend(item: T): void {
     this.#unshift(item);
   }
@@ -219,21 +231,24 @@ export class List<T> extends OrderedList<T> {
 export class Stack<T> extends BaseList<T> {
   #pop = pop as () => T | undefined;
 
-  /**
+  /** Add the given {@link item} to the top.
+   *
    * [Infra Standard](https://infra.spec.whatwg.org/#stack-push)
    */
   push(item: T): void {
     super.append(item);
   }
 
-  /**
+  /** Remove and return item from the top.
+   *
    * [Infra Standard](https://infra.spec.whatwg.org/#stack-pop)
    */
   pop(): T | undefined {
     return this.#pop();
   }
 
-  /**
+  /** Return item from the top.
+   *
    * [Infra Standard](https://infra.spec.whatwg.org/#stack-peek)
    */
   peek(): T | undefined {
@@ -248,7 +263,8 @@ export class Stack<T> extends BaseList<T> {
 export class Queue<T> extends BaseList<T> {
   #shift = shift as () => T | undefined;
 
-  /**
+  /** Add given {@link item} to the end.
+   *
    * `O(1)`
    *
    * [Infra Standard](https://infra.spec.whatwg.org/#queue-enqueue)
@@ -257,7 +273,8 @@ export class Queue<T> extends BaseList<T> {
     super.append(item);
   }
 
-  /**
+  /** Remove and return item from the start.
+   *
    * `O(1)`
    *
    * [Infra Standard](https://infra.spec.whatwg.org/#queue-dequeue)
@@ -394,6 +411,7 @@ export class Set<T> extends OrderedList<T> {
   }
 }
 
+/** Kind of order. */
 export type Order = "asc" | "desc";
 
 export interface ListLike<T> {
@@ -403,6 +421,7 @@ export interface ListLike<T> {
   [Symbol.iterator](): IterableIterator<T>;
 }
 
+/** Range type. */
 export type RangeType = "exclusive" | "inclusive";
 
 /** Creates a new ordered set containing all of the integers from {@link n} up to and including {@link m} or {@link m} - 1 in consecutively increasing order.
