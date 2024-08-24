@@ -6,14 +6,13 @@
 [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg)](https://github.com/RichardLitt/standard-readme)
 
-[Infra](https://infra.spec.whatwg.org/) Standard, based on WHATWG spec reference
+[Infra Standard](https://infra.spec.whatwg.org/), based on WHATWG spec reference
 implementation.
 
 ## Table of Contents <!-- omit in toc -->
 
 - [Install](#install)
 - [Usage](#usage)
-  - [Primitive Data Types](#primitive-data-types)
   - [Data Structures](#data-structures)
     - [List](#list)
     - [Stack](#stack)
@@ -39,13 +38,6 @@ npx jsr add @miyauci/infra
 ```
 
 ## Usage
-
-### Primitive Data Types
-
-This section is is an implementation corresponding to
-[4. Primitive data types](https://infra.spec.whatwg.org/#primitive-data-types).
-
-// TODO
 
 ### Data Structures
 
