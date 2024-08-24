@@ -261,6 +261,49 @@ describe("List", () => {
     });
   });
 
+  describe("replace", () => {
+    it<Context>("should replace matched item", function () {
+      this.list.append(0), this.list.append(1);
+      this.list.append(2);
+
+      this.list.replace(1, 4);
+
+      expect([...this.list]).toEqual([0, 4, 2]);
+    });
+
+    it<Context>("should replace matched items", function () {
+      this.list.append(0), this.list.append(0);
+      this.list.append(1);
+
+      this.list.replace(0, 3);
+
+      expect([...this.list]).toEqual([3, 3, 1]);
+    });
+  });
+
+  describe("replaceIf", () => {
+    it<Context>("should replace item if condition is true", function () {
+      this.list.append(0), this.list.append(1);
+      this.list.append(2);
+
+      this.list.replaceIf((item) => item === 1, 4);
+
+      expect([...this.list]).toEqual([0, 4, 2]);
+    });
+
+    it<Context>(
+      "should replace matched items if condition is true",
+      function () {
+        this.list.append(0), this.list.append(1);
+        this.list.append(2);
+
+        this.list.replaceIf(() => true, 0);
+
+        expect([...this.list]).toEqual([0, 0, 0]);
+      },
+    );
+  });
+
   describe("removeIf", () => {
     it<Context>("should remove all items", function () {
       this.list.append(0), this.list.append(1);
