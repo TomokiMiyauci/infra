@@ -334,7 +334,8 @@ export class Set<T> extends OrderedList<T> {
     }
   }
 
-  /**
+  /** Returns a boolean indicating if all items of this are in the given {@link other}.
+   *
    * [Infra Standard](https://infra.spec.whatwg.org/#set-subset)
    */
   isSubsetOf(other: ListLike<T>): boolean {
@@ -343,7 +344,8 @@ export class Set<T> extends OrderedList<T> {
     return true;
   }
 
-  /**
+  /** Returns a boolean indicating if all items of the given {@link other} are in this.
+   *
    * [Infra Standard](https://infra.spec.whatwg.org/#set-superset)
    */
   isSupersetOf(other: ListLike<T>): boolean {
@@ -352,7 +354,8 @@ export class Set<T> extends OrderedList<T> {
     return true;
   }
 
-  /**
+  /** Returns a new {@link Set set} containing items in both this and the given {@link iter}.
+   *
    * [Infra Standard](https://infra.spec.whatwg.org/#set-intersection)
    */
   intersection(iter: ListLike<T>): Set<T> {
@@ -363,7 +366,8 @@ export class Set<T> extends OrderedList<T> {
     return set;
   }
 
-  /**
+  /** Returns a new {@link Set set} containing items which are in either or both of this and the given {@link iter}.
+   *
    * [Infra Standard](https://infra.spec.whatwg.org/#set-union)
    */
   union(iter: Iterable<T>): Set<T> {
