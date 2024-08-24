@@ -39,8 +39,6 @@ class BaseList<T> {
 
   /** Remove all items.
    *
-   * `O(n)`
-   *
    * [Infra Standard](https://infra.spec.whatwg.org/#list-size)
    */
   empty(): void {
@@ -49,8 +47,6 @@ class BaseList<T> {
 
   /** Whether the {@link item} appears in the list or not.
    *
-   * `O(n)`
-   *
    * [Infra Standard](https://infra.spec.whatwg.org/#list-contain)
    */
   contains(item: T): boolean {
@@ -58,8 +54,6 @@ class BaseList<T> {
   }
 
   /** Create a new list clone, of the same designation.
-   *
-   * `O(n)`
    *
    * [Infra Standard](https://infra.spec.whatwg.org/#list-clone)
    */
@@ -72,8 +66,6 @@ class BaseList<T> {
   }
 
   /** Return list with sort by {@link order}.
-   *
-   * `O(n log n)`
    *
    * [Infra Standard](https://infra.spec.whatwg.org/#list-sort-in-ascending-order)
    */
@@ -120,8 +112,6 @@ abstract class OrderedList<T> extends BaseList<T> {
 
   /** Remove {@link item} from the list.
    *
-   * `O(n)`
-   *
    * [Infra Standard](https://infra.spec.whatwg.org/#list-remove)
    */
   remove(item: T): void {
@@ -131,8 +121,6 @@ abstract class OrderedList<T> extends BaseList<T> {
   }
 
   /** Remove all items from the list that match a given {@link condition}.
-   *
-   * `O(n)`
    *
    * [Infra Standard](https://infra.spec.whatwg.org/#list-remove)
    */
@@ -160,8 +148,6 @@ export class List<T> extends OrderedList<T> {
 
   /** Add the given {@link item} to the end.
    *
-   * `O(1)`
-   *
    * [Infra Standard](https://infra.spec.whatwg.org/#list-append)
    */
   public override append(item: T): void {
@@ -169,8 +155,6 @@ export class List<T> extends OrderedList<T> {
   }
 
   /** Extend with {@link iter}.
-   *
-   * `O(n)`
    *
    * [Infra Standard](https://infra.spec.whatwg.org/#list-extend)
    */
@@ -180,8 +164,6 @@ export class List<T> extends OrderedList<T> {
 
   /** Add the given {@link item} to the beginning.
    *
-   * `O(1)`
-   *
    * [Infra Standard](https://infra.spec.whatwg.org/#list-prepend)
    */
   override prepend(item: T): void {
@@ -189,8 +171,6 @@ export class List<T> extends OrderedList<T> {
   }
 
   /** Replace {@link oldItem} to {@link newItem}.
-   *
-   * `O(n)`
    *
    * [Infra Standard](https://infra.spec.whatwg.org/#list-replace)
    */
@@ -202,8 +182,6 @@ export class List<T> extends OrderedList<T> {
 
   /** Replace all items from the list that match a given {@link condition} with the given {@link newItem}.
    *
-   * `O(n)`
-   *
    * [Infra Standard](https://infra.spec.whatwg.org/#list-replace)
    */
   replaceIf(condition: (item: T) => boolean, newItem: T): void {
@@ -213,8 +191,6 @@ export class List<T> extends OrderedList<T> {
   }
 
   /** Add the given {@link item} to the list between the given {@link index} − 1 and the given {@link index}. If the given {@link index} is 0, then {@link prepend} the given {@link item} to the list.
-   *
-   * `O(n)`
    *
    * [Infra Standard](https://infra.spec.whatwg.org/#list-replace)
    */
@@ -265,8 +241,6 @@ export class Queue<T> extends BaseList<T> {
 
   /** Add given {@link item} to the end.
    *
-   * `O(1)`
-   *
    * [Infra Standard](https://infra.spec.whatwg.org/#queue-enqueue)
    */
   enqueue(item: T): void {
@@ -274,8 +248,6 @@ export class Queue<T> extends BaseList<T> {
   }
 
   /** Remove and return item from the start.
-   *
-   * `O(1)`
    *
    * [Infra Standard](https://infra.spec.whatwg.org/#queue-dequeue)
    */
@@ -304,8 +276,6 @@ export class Set<T> extends OrderedList<T> {
 
   /** Append {@link item} if this does not {@link contains} the given {@link item}.
    *
-   * `O(n)`
-   *
    * [Infra Standard](https://infra.spec.whatwg.org/#set-append)
    */
   override append(item: T): void {
@@ -314,8 +284,6 @@ export class Set<T> extends OrderedList<T> {
 
   /** Prepend {@link item} if this does not {@link contains} the given {@link item}.
    *
-   * `O(n)`
-   *
    * [Infra Standard](https://infra.spec.whatwg.org/#set-prepend)
    */
   override prepend(item: T): void {
@@ -323,8 +291,6 @@ export class Set<T> extends OrderedList<T> {
   }
 
   /** If set {@link contains} {@link oldItem} or {@link newItem}, then replace the first instance of either with {@link newItem} and {@link remove} all other instances.
-   *
-   * `O(n)`
    *
    * [Infra Standard](https://infra.spec.whatwg.org/#set-replace)
    */
@@ -347,8 +313,6 @@ export class Set<T> extends OrderedList<T> {
   }
 
   /** Replace the first matched {@link condition} and {@link remove} all other instances.
-   *
-   * `O(n)`
    *
    * [Infra Standard](https://infra.spec.whatwg.org/#set-replace)
    */
