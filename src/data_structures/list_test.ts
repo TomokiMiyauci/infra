@@ -1,10 +1,12 @@
 import { expect } from "@std/expect";
 import { beforeEach, describe, it } from "@std/testing/bdd";
-import { List, OrderedSet, range } from "./list.ts";
+import { List, Queue, range, Set, Stack } from "./list.ts";
 
 interface Context {
   list: List<unknown>;
-  set: OrderedSet<unknown>;
+  set: Set<unknown>;
+  stack: Stack<unknown>;
+  queue: Queue<unknown>;
 }
 
 describe("List", () => {
@@ -259,6 +261,49 @@ describe("List", () => {
     });
   });
 
+  describe("replace", () => {
+    it<Context>("should replace matched item", function () {
+      this.list.append(0), this.list.append(1);
+      this.list.append(2);
+
+      this.list.replace(1, 4);
+
+      expect([...this.list]).toEqual([0, 4, 2]);
+    });
+
+    it<Context>("should replace matched items", function () {
+      this.list.append(0), this.list.append(0);
+      this.list.append(1);
+
+      this.list.replace(0, 3);
+
+      expect([...this.list]).toEqual([3, 3, 1]);
+    });
+  });
+
+  describe("replaceIf", () => {
+    it<Context>("should replace item if condition is true", function () {
+      this.list.append(0), this.list.append(1);
+      this.list.append(2);
+
+      this.list.replaceIf((item) => item === 1, 4);
+
+      expect([...this.list]).toEqual([0, 4, 2]);
+    });
+
+    it<Context>(
+      "should replace matched items if condition is true",
+      function () {
+        this.list.append(0), this.list.append(1);
+        this.list.append(2);
+
+        this.list.replaceIf(() => true, 0);
+
+        expect([...this.list]).toEqual([0, 0, 0]);
+      },
+    );
+  });
+
   describe("removeIf", () => {
     it<Context>("should remove all items", function () {
       this.list.append(0), this.list.append(1);
@@ -306,22 +351,194 @@ describe("List", () => {
       },
     );
   });
+
+  describe("sort", () => {
+    describe("ASC", () => {
+      it<Context>("should sort by asc", function () {
+        this.list.append(2);
+        this.list.append(0);
+        this.list.append(1);
+
+        expect([...this.list]).toEqual([2, 0, 1]);
+
+        expect([...this.list.sort("asc")]).toEqual([0, 1, 2]);
+        expect([...this.list]).toEqual([2, 0, 1]);
+      });
+
+      it<Context>("should sort by asc with custom compare", function () {
+        const list = new List([2, 0, 1]);
+
+        expect([...list.sort("asc", (a: number, b: number) => {
+          return a < b;
+        })]).toEqual([0, 1, 2]);
+      });
+
+      it<Context>("should sort by asc with custom compare 2", function () {
+        const list = new List([2, 0, 1, 0, 2, 1, 1, 2, 0]);
+
+        expect([...list.sort("asc", (a: number, b: number) => {
+          return a < b;
+        })]).toEqual([0, 0, 0, 1, 1, 1, 2, 2, 2]);
+      });
+    });
+
+    describe("DESC", () => {
+      it<Context>("should sort by desc", function () {
+        this.list.append(2);
+        this.list.append(0);
+        this.list.append(1);
+
+        expect([...this.list]).toEqual([2, 0, 1]);
+
+        expect([...this.list.sort("desc")]).toEqual([2, 1, 0]);
+        expect([...this.list]).toEqual([2, 0, 1]);
+      });
+
+      it<Context>("should sort by desc with custom compare", function () {
+        const list = new List([2, 0, 1]);
+
+        expect([...list.sort("desc", (a: number, b: number) => {
+          return a < b;
+        })]).toEqual([2, 1, 0]);
+      });
+
+      it<Context>("should sort by desc with custom compare 2", function () {
+        const list = new List([2, 0, 1, 0, 2, 1, 1, 2, 0]);
+
+        expect([...list.sort("desc", (a: number, b: number) => {
+          return a < b;
+        })]).toEqual([2, 2, 2, 1, 1, 1, 0, 0, 0]);
+      });
+    });
+  });
 });
 
-describe("OrderedSet", () => {
+describe("Stack", () => {
   beforeEach<Context>(function () {
-    this.set = new OrderedSet();
+    this.stack = new Stack();
+  });
+
+  describe("push", () => {
+    it<Context>("should add item", function () {
+      this.stack.push(0);
+
+      expect(this.stack.size).toBe(1);
+      expect(this.stack.peek()).toBe(0);
+      expect(this.stack[0]).toBe(0);
+    });
+
+    it<Context>("should add items", function () {
+      this.stack.push(0);
+      this.stack.push(0);
+      this.stack.push(1);
+
+      expect(this.stack.size).toBe(3);
+      expect(this.stack.peek()).toBe(1);
+      expect(this.stack[0]).toBe(0);
+      expect(this.stack[1]).toBe(0);
+      expect(this.stack[2]).toBe(1);
+    });
+  });
+
+  describe("pop", () => {
+    it<Context>("should return undefined if empty", function () {
+      expect(this.stack.size).toBe(0);
+      expect(this.stack.pop()).toBe(undefined);
+      expect(this.stack.size).toBe(0);
+    });
+
+    it<Context>("should return value and then to be empty", function () {
+      this.stack.push(0);
+
+      expect(this.stack.size).toBe(1);
+      expect(this.stack.pop()).toBe(0);
+      expect(this.stack.size).toBe(0);
+    });
+  });
+
+  describe("peek", () => {
+    it<Context>("should return undefined if empty", function () {
+      expect(this.stack.peek()).toBe(undefined);
+    });
+
+    it<Context>("should return last value", function () {
+      this.stack.push(0);
+
+      expect(this.stack.peek()).toBe(0);
+
+      this.stack.push(1);
+
+      expect(this.stack.peek()).toBe(1);
+
+      this.stack.pop();
+
+      expect(this.stack.peek()).toBe(0);
+    });
+  });
+});
+
+describe("Queue", () => {
+  beforeEach<Context>(function () {
+    this.queue = new Queue();
+  });
+
+  describe("enqueue", () => {
+    it<Context>("should add item", function () {
+      this.queue.enqueue(0);
+
+      expect(this.queue.size).toBe(1);
+      expect(this.queue[0]).toBe(0);
+    });
+
+    it<Context>("should add items", function () {
+      this.queue.enqueue(0);
+      this.queue.enqueue(0);
+      this.queue.enqueue(1);
+
+      expect(this.queue.size).toBe(3);
+      expect(this.queue[0]).toBe(0);
+      expect(this.queue[1]).toBe(0);
+      expect(this.queue[2]).toBe(1);
+    });
+  });
+
+  describe("dequeue", () => {
+    it<Context>("should return undefined if empty", function () {
+      expect(this.queue.size).toBe(0);
+      expect(this.queue.dequeue()).toBe(undefined);
+      expect(this.queue.size).toBe(0);
+    });
+
+    it<Context>("should return value and then to be empty", function () {
+      this.queue.enqueue(0);
+      this.queue.enqueue(1);
+      this.queue.enqueue(2);
+
+      expect(this.queue.size).toBe(3);
+      expect(this.queue.dequeue()).toBe(0);
+      expect(this.queue.size).toBe(2);
+      expect(this.queue.dequeue()).toBe(1);
+      expect(this.queue.size).toBe(1);
+      expect(this.queue.dequeue()).toBe(2);
+      expect(this.queue.size).toBe(0);
+    });
+  });
+});
+
+describe("Set", () => {
+  beforeEach<Context>(function () {
+    this.set = new Set();
   });
 
   describe("construct", () => {
     it("should add initial value", () => {
-      const set = new OrderedSet([1, 2, 3]);
+      const set = new Set([1, 2, 3]);
 
       expect([...set]).toEqual([1, 2, 3]);
     });
 
     it("should add initial value except duplication", () => {
-      const set = new OrderedSet([1, 1, 1, 2, 2, 2]);
+      const set = new Set([1, 1, 1, 2, 2, 2]);
 
       expect([...set]).toEqual([1, 2]);
     });
@@ -656,7 +873,7 @@ describe("OrderedSet", () => {
     it<Context>("should return cloned union set 2", function () {
       this.set.append(0), this.set.append(1);
 
-      const other = new OrderedSet();
+      const other = new Set();
       other.append(-1), other.append(3);
       const set = this.set.union(other);
 
@@ -672,7 +889,7 @@ describe("OrderedSet", () => {
 
   describe("isSubsetOf", () => {
     it<Context>("should return empty if each set is empty", function () {
-      expect(this.set.isSubsetOf(new OrderedSet())).toBeTruthy();
+      expect(this.set.isSubsetOf(new Set())).toBeTruthy();
     });
 
     it<Context>(
@@ -683,7 +900,7 @@ describe("OrderedSet", () => {
           this.set.append(12),
           this.set.append(16);
 
-        const other = new OrderedSet();
+        const other = new Set();
 
         other.append(2),
           other.append(4),
@@ -709,7 +926,7 @@ describe("OrderedSet", () => {
         this.set.append(11);
         this.set.append(13);
 
-        const other = new OrderedSet();
+        const other = new Set();
 
         other.append(3),
           other.append(5),
@@ -726,7 +943,7 @@ describe("OrderedSet", () => {
       function () {
         this.set.append(1), this.set.append(2), this.set.append(3);
 
-        const other = new OrderedSet();
+        const other = new Set();
 
         other.append(1),
           other.append(2),
@@ -738,7 +955,7 @@ describe("OrderedSet", () => {
 
   describe("isSupersetOf", () => {
     it<Context>("should return empty if each set is empty", function () {
-      expect(this.set.isSupersetOf(new OrderedSet())).toBeTruthy();
+      expect(this.set.isSupersetOf(new Set())).toBeTruthy();
     });
 
     it<Context>(
@@ -753,7 +970,7 @@ describe("OrderedSet", () => {
           this.set.append(14),
           this.set.append(16);
 
-        const other = new OrderedSet();
+        const other = new Set();
 
         other.append(4), other.append(8), other.append(12), other.append(16);
 
@@ -771,7 +988,7 @@ describe("OrderedSet", () => {
           this.set.append(11),
           this.set.append(13);
 
-        const other = new OrderedSet();
+        const other = new Set();
 
         other.append(2), other.append(3), other.append(5), other.append(7);
         other.append(9);
@@ -787,7 +1004,7 @@ describe("OrderedSet", () => {
       function () {
         this.set.append(1), this.set.append(2), this.set.append(3);
 
-        const other = new OrderedSet();
+        const other = new Set();
 
         other.append(1),
           other.append(2),
