@@ -292,18 +292,18 @@ describe("Map", () => {
       function () {
         const map = new Map<number, string>();
 
-        map.set(0, "a"), map.set(2, "b");
+        map.set(0, "b"), map.set(2, "a");
         map.set(1, "c");
 
-        expect([...map]).toEqual([[0, "a"], [2, "b"], [1, "c"]]);
+        expect([...map]).toEqual([[0, "b"], [2, "a"], [1, "c"]]);
 
         const sorted = map.sort(
           "desc",
           ([_, value], [__, value2]) => value < value2,
         );
 
-        expect([...sorted]).toEqual([[1, "c"], [2, "b"], [0, "a"]]);
-        expect([...map]).toEqual([[0, "a"], [2, "b"], [1, "c"]]);
+        expect([...sorted]).toEqual([[1, "c"], [0, "b"], [2, "a"]]);
+        expect([...map]).toEqual([[0, "b"], [2, "a"], [1, "c"]]);
       },
     );
   });
